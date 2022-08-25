@@ -7,7 +7,7 @@ from flask import (
     request)
 
 #from flask_pymongo import PyMongo
-import new_wine_predictor
+import .new_wine_predictor
 
 app = Flask(__name__)
 
