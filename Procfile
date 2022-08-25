@@ -1,0 +1,1 @@
+web: gunicorn FinalBootCamp_project_WhiteWine.app:app

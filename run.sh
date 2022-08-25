@@ -1,0 +1,1 @@
+FLASK_APP=FinalBootCamp_project_WhiteWine/app.py flask run

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>White Wine Predictor</title>
+
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <body>
+        <table id='tbl' border=1></table>
+        <div class="wrapper">
+          <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">White wine Physical and Chemical Properties
+                </a>
+              </div>
+            </div>
+          </nav>
+        
+        <div class="container">
+            <div class="jumbotron" style="text-align: center">
+                <h1>White Wine Quality Predictor</h1>
+                <p>Enter the physical and chemical characteristics of your new white wine to predict the quality</p>
+            </div>
+
+          <!-- <div class="container">
+            <div class="row margin-top-50">
+              <!--Image courtesy of Stick-png: https://www.stickpng.com/img/comics-and-fantasy/et-the-extra-terrestrial/et-the-extra-terrestrial-pointing-finger -->
+              <!-- <img  src="static/images/whitewineshades.jpg" width="200"  height=auto> -->
+              <!-- <p>Enter the physical and chemical characteristics of your new white wine and it will -->
+                <!-- predict its quality on a scale of 3-9, 3 being low and 9 being high quality  </p> --> -->
+              <button class="btn" onClick="window.location.reload();">Clear Page</button>
+              <button class="btn" id="button2" type="button" >Show All White Wine Qualties</button>  
+              <button id="button" type="button" class="btn">Run Prediction</button>           
+              <div class="col-md-4">
+                <aside class="filters">
+                  <div class="panel panel-default">           
+                    <div class="panel-heading">Filter Search</div>
+                    <div class="panel-body"</div>
+                    </div>
+
+            <div class="row">
+                <div class="col-md-offset-2 col-md-10">
+                    <form method="POST" action="/send" role="form", name="wineform">
+                        <div class="form-group">
+                            <label for="inputfixedacidity">Enter Fixed Acidity</label>
+                            <input type="text" class="form-control" id="fixed_acidity" name="fixed_acidity" placeholder="Value between 3.8 & 14.2">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLat">Enter Volatile Acidity</label>
+                            <input type="text" class="form-control" id="volatile_acidity" name="volatile_acidity" placeholder="Value between 0.08 & 1.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLon">Enter Citric Acid</label>
+                            <input type="text" class="form-control" id="citric_acid" name="citric_acid" placeholder="Value between 0 & 1.66">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLon">Enter Residual Sugar</label>
+                            <input type="text" class="form-control" id="residual_sugar" name="residual_sugar" placeholder="Value between 0.6 & 65.8">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLon">Enter Chlorides</label>
+                            <input type="text" class="form-control" id="chlorides" name="chlorides" placeholder="Value between 0.009 & 0.346">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLon">Enter Free Sulfur Dioxide</label>
+                            <input type="text" class="form-control" id="free_sulfur_dioxide" name="free_sulfur_dioxide" placeholder="Value between 2 & 289">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLon">Enter Total Sulfur Dioxide</label>
+                            <input type="text" class="form-control" id="total_sulfur_dioxide" name="total_sulfur_dioxide" placeholder="Value between 9 & 440">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLon">Enter Density</label>
+                            <input type="text" class="form-control" id="density" name="density" placeholder="Value between 0.98711 & 1.03898">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLon">Enter pH</label>
+                            <input type="text" class="form-control" id="pH" name="pH" placeholder="Value between 2.72 & 3.82">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLon">Enter Sulphates</label>
+                            <input type="text" class="form-control" id="sulphates" name="sulphates" placeholder="Value between 0.22 & 1.08">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLon">Enter Alcohol</label>
+                            <input type="text" class="form-control" id="alcohol" name="alcohol" placeholder="Value between 8 & 14.2">
+                        </div>
+                        <input type="submit" value="submit" class="btn btn-default">
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-10">
+                <div id="table-area" class="">
+                  <table id="ranges-table" class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th class="table-head">Characteristic</th>  
+                        <th class="table-head">Min Value</th>                 
+                        <th class="table-head">Max Value</th>  
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+</html>
