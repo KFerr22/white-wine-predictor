@@ -5,7 +5,7 @@ from flask import (
     redirect, 
     jsonify, 
     request)
-    
+
 #from flask_pymongo import PyMongo
 import new_wine_predictor
 

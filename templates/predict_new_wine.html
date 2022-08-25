@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>White Wine Predictor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  
+  <!-- original stylesheet -->
+    <!-- <link rel="stylesheet" href="static/css/style.css"> -->
+
+  <!-- stylesheet pet pals -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.1.0/math.min.js"></script>
+</head>
+<body>
+  <table id='tbl' border=1></table>
+  <div class="wrapper">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">White wine Physical and Chemical Properties
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div class="hero text-center">
+      <h1>White Wine Quality Predictor</h1>
+        <p></p>     
+    </div>
+    <div class="container">
+      <div class="row margin-top-50">
+        <img  src="static/images/whitewineshades.jpg" width="200"  height=auto>
+        <p>Enter the physical and chemical characteristics of your new white wine and it will
+          predict its quality on a scale of 3-9, 3 being low and 9 being high quality  </p>
+        <button class="btn" onClick="window.location.reload();">Clear Input Values</button>
+        <button id="button" type="button" class="btn btn-default">Run Prediction</button>
+        <h2>Range values for white wine quality analysis </h2>  
+        <body onload=showallcharacterictics()> </body>
+
+        <div class="col-md-6">
+          <aside class="filters">
+            <div class="panel panel-default">           
+              <div class="panel-heading">Filter Search</div>
+              <div class="panel-body">
+                <form>
+                  <div class="form-group">
+                    <ul class="list-group" id="filters">
+                      <li class="filter list-group-item">
+                        <form method="POST" action="/send" role="form", name="wineform">
+                          <div class="form-group">
+                            <label for="inputfixedacidity">Enter Fixed Acidity</label>
+                            <input type="text" class="form-control" id="fixed_acidity" name="fixed_acidity" placeholder="Value between 3.8 & 14.2">
+                          </div>
+                          <div class="form-group">
+                            <label for="inputLat">Enter Volatile Acidity</label>
+                            <input type="text" class="form-control" id="volatile_acidity" name="volatile_acidity" placeholder="Value between 0.08 & 1.1">
+                          </div>
+                          <div class="form-group">
+                            <label for="inputcitricacid">Enter Citric Acid</label>
+                            <input type="text" class="form-control" id="citric_acid" name="citric_acid" placeholder="Value between 0 & 1.66">
+                          </div>
+                          <div class="form-group">
+                            <label for="inputresidualsugar">Enter Residual Sugar</label>
+                            <input type="text" class="form-control" id="residual_sugar" name="residual_sugar" placeholder="Value between 0.6 & 65.8">
+                          </div>
+                          <div class="form-group">
+                            <label for="inputclorides">Enter Chlorides</label>
+                            <input type="text" class="form-control" id="chlorides" name="chlorides" placeholder="Value between 0.009 & 0.346">
+                          </div>
+                          <div class="form-group">
+                            <label for="inputfreesulfurdioxide">Enter Free Sulfur Dioxide</label>
+                            <input type="text" class="form-control" id="free_sulfur_dioxide" name="free_sulfur_dioxide" placeholder="Value between 2 & 289">
+                          </div>
+                          <div class="form-group">
+                            <label for="inputtotalsulfurdioxide">Enter Total Sulfur Dioxide</label>
+                            <input type="text" class="form-control" id="total_sulfur_dioxide" name="total_sulfur_dioxide" placeholder="Value between 9 & 440">
+                          </div>
+                          <div class="form-group">
+                            <label for="inputdensity">Enter Density</label>
+                            <input type="text" class="form-control" id="density" name="density" placeholder="Value between 0.98711 & 1.03898">
+                          </div>
+                          <div class="form-group">
+                            <label for="inputph">Enter pH</label>
+                            <input type="text" class="form-control" id="pH" name="pH" placeholder="Value between 2.72 & 3.82">
+                          </div>
+                          <div class="form-group">
+                            <label for="inputsulphates">Enter Sulphates</label>
+                            <input type="text" class="form-control" id="sulphates" name="sulphates" placeholder="Value between 0.22 & 1.08">
+                          </div>
+                          <div class="form-group">
+                            <label for="inputalcohol">Enter Alcohol</label>
+                            <input type="text" class="form-control" id="alcohol" name="alcohol" placeholder="Value between 8 & 14.2">
+                          </div>
+                        <input type="submit" value="Run Prediction" class="btn btn-default">
+                        </form>
+
+                        <!-- <label for="fixed_acidity">Enter Fixed Acidity</label>
+                          <input type="text" id="fixed_acidity" size="10" name="fixed_acidity">                  
+                        <label for="volatile_acidity">Enter Volatile Acidity</label>               
+                          <input type="text" id="volatile_acidity" size="10" name="volatile_acidity"> 
+                        <label for="citric_acid">Enter Citric Acid</label>
+                          <input type="text" id="citric_acid" size="10" name="citric_acid"> 
+                        <label for="residual_sugar">Enter Residual Sugar</label>
+                          <input type="text" id="residual_sugar" size="10" name="residual_sugar"> 
+                        <label for="chlorides">Enter Chlorides</label>
+                          <input type="text" id="chlorides" size="10" name="chlorides">
+                          <label for="total_sulfur_dioxide">Enter Total Sulfur Dioxide</label>
+                          <input type="text" id="total_sulfur_dioxide" size="10" name="total_sulfur_dioxide"> 
+			                  <label for="free_sulfur_dioxide">Enter Free Sulfur Dioxide</label>
+                          <input type="text" id="free_sulfur_dioxide" size="10" name="free_sulfur_dioxide"> 
+			                  <label for="density">Enter Density</label>
+                          <input type="text" id="density" size="10" name="density"> 
+			                  <label for="pH">Enter pH</label>
+                          <input type="text" id="pH" size="10" name="pH"> 
+			                  <label for="sulphates">Enter Sulphates</label>
+                          <input type="text" id="sulphates" size="10" name="sulphates"> 
+			                  <label for="alcohol">Enter Alcohol</label>
+                          <input type="text" id="alcohol" size="10" name="alcohol">   -->
+                      </li>
+                    </ul>
+                  </div>                 
+                </form>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <div class="col-md-5">
+          <div id="table-area" class="">
+            <table id="ranges-table" class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="table-head">Characteristic</th>  
+                  <th class="table-head">Min Value</th>                 
+                  <th class="table-head">Max Value</th>  
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table> 
+            <div class="row">
+              <div class="column">
+                <div class='tableauPlaceholder' id='viz1661218530585' style='position: relative'><noscript>
+                <a href='#'>
+                <img alt='Histogram of White Wine Quality in this dataset. 3 lowest quality up to 9 highest quality ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Hi&#47;HistogramofWhiteWineQualityinthisdataset_3lowestqualityupto9highestquality&#47;Sheet3&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='HistogramofWhiteWineQualityinthisdataset_3lowestqualityupto9highestquality&#47;Sheet3' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Hi&#47;HistogramofWhiteWineQualityinthisdataset_3lowestqualityupto9highestquality&#47;Sheet3&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object>                
+               <script type='text/javascript'>   var divElement = document.getElementById('viz1661218530585');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>            
+              </div>
+              <br>
+              <!-- Tableau graphs -->
+              <!-- <div class="column">
+                <div class='tableauPlaceholder' id='viz1661223660649' style='position: relative'><noscript><a href='#'><img alt='Least correlated characteristics for a quality white wine ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Le&#47;Leastcorrelatedcharacteristicsforaqualitywhitewine&#47;Sheet1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Leastcorrelatedcharacteristicsforaqualitywhitewine&#47;Sheet1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Le&#47;Leastcorrelatedcharacteristicsforaqualitywhitewine&#47;Sheet1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1661223660649');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+              </div>
+              <br> -->
+              <!-- <div class="column">
+                <div class='tableauPlaceholder' id='viz1661224607888' style='position: relative'><noscript><a href='#'><img alt='Five most  correlated characteristics for a quality white wine ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fi&#47;Fivemostcorrelatedcharacteristicsforaqualitywhitewine&#47;Sheet2&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Fivemostcorrelatedcharacteristicsforaqualitywhitewine&#47;Sheet2' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fi&#47;Fivemostcorrelatedcharacteristicsforaqualitywhitewine&#47;Sheet2&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1661224607888');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+              </div> -->
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js"></script>
+  <!-- original js links
+    <script src="static/js/app.js"></script> -->
+    <script src="static/js/data.js"></script>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
